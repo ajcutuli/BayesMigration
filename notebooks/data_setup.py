@@ -1,13 +1,6 @@
 import pandas as pd
 import numpy as np
-
-import matplotlib.pyplot as plt
-
-from sklearn.preprocessing import LabelEncoder
-
-from itertools import combinations
-
-from scipy.stats import norm, f, chi2
+from scipy.stats import norm
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -72,6 +65,13 @@ years = housing.index
 population.index = years
 income.index = years
 
+'''
+IN THE COMMENTED OUT CODE, WE GENERATE ARTIFICIAL DATA OBTAINED THROUGH 
+RANDOM SAMPLING FROM A GAUSSIAN DISTRIBUTION, GIVEN LOCATION AND SCALE 
+ESTIMATES FROM THE US CENSUS BUREAU DATA. WE REMARK THAT THE SCALE ESTIMATE
+WE USE IS A MEASURE OF STANDARD ERROR RATHER THAN STANDARD DEVIATION, SO 
+THE ACTUAL VARIATION IS UNDERESTIMATED.
+'''
 # N = 10
 
 # df = pd.DataFrame()
@@ -148,22 +148,3 @@ test_years = list(years[-3:])
 
 df_train = df.query("Year not in @test_years")
 df_test = df.query("Year in @test_years")
-
-# critical value for significance of feature weights
-# critical_value = chi2.ppf(0.95, df=1)
-
-# train_len_repeat = 20
-# test_len_repeat = 5
-
-# sample flows for training data
-# np.random.seed(0)
-
-# observations = np.random.normal(  np.repeat(df_train['M_ij_mean'], train_len_repeat)  ,  np.repeat(df_train['se(M_ij)'], train_len_repeat)).astype('int')
-# observations[observations < 0] = 0
-# df_train = pd.DataFrame(np.repeat(df_train.values, train_len_repeat, axis=0), columns=df_train.columns)
-# df_train.insert(df_train.columns.get_loc('P_i'), 'M_ij', observations)
-
-# observations = np.random.normal(  np.repeat(df_test['M_ij_mean'], test_len_repeat)  ,  np.repeat(df_test['se(M_ij)'], test_len_repeat)).astype('int')
-# observations[observations < 0] = 0
-# df_test = pd.DataFrame(np.repeat(df_test.values, test_len_repeat, axis=0), columns=df_test.columns)
-# df_test.insert(df_test.columns.get_loc('P_i'), 'M_ij', observations)
