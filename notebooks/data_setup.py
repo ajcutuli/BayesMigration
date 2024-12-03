@@ -137,7 +137,12 @@ THE ACTUAL VARIATION IS UNDERESTIMATED.
 # df.insert(df.columns.get_loc('path_ind'), 'State_pair' , df.State_i + ' - ' + df.State_j)
 # df.to_csv('../data/state/state_flow_samples.csv')
 
+import gzip
 
+with gzip.open('../data/state/state_flow_samples_climate.csv.gz', 'rt', newline='') as csv_file:
+    csv_data = csv_file.read()
+    with open('../data/state/state_flow_samples_climate_dev.csv', 'wt') as out_file:
+         out_file.write(csv_data)
 
 
 # join with dataset with additional climate-related features
